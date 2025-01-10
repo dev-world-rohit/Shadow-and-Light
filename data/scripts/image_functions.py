@@ -6,6 +6,7 @@ def load_image(path, alpha = 255):
     path = "data/images/" + path
     image = pygame.image.load(path)
     image.set_alpha(alpha)
+    image.set_colorkey(color_key)
     return image
 
 def scale_image_size(image, width, height):

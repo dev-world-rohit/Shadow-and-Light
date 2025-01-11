@@ -17,7 +17,7 @@ pygame.mixer.init()
 SCREEN_WIDTH, SCREEN_HEIGHT = 400, 600
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Shadow and Light")
-icon = load_image('shot.png')
+icon = load_image('game.ico')
 pygame.display.set_icon(icon)
 
 # Images-----------------------------#
@@ -180,6 +180,7 @@ while running:
                 game_start = False
             if button_clicked == 'thumbs_up':
                 webbrowser.open('https://github.com/dev-world-rohit')
+            button_clicked = None
 
     offset_x, offset_y = apply_shake(shake_duration)
 

@@ -30,6 +30,15 @@ class Font():
             else:
                 self.image_x_size += 1
 
+    def get_width(self, string, text_spacing = 3):
+        width = 0
+        for character in string:
+            if character == ' ':
+                width += 5 * self.size_ratio
+            else:
+                width += self.image_character_dict[character][1] + text_spacing
+        return width
+
     def display_fonts(self, surface, string, pos, text_spacing = 3):
         for character in string:
             if character == ' ':

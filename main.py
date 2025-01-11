@@ -9,6 +9,7 @@ from data.scripts.circles import Circle
 from data.scripts.player import Player
 from data.scripts.font import Font
 from data.scripts.image_functions import load_image, scale_image_ratio, scale_image_size
+from data.scripts.file_manager import read_file, write_data
 
 pygame.init()
 pygame.mixer.init()
@@ -75,6 +76,7 @@ background_music = pygame.mixer.music.load('data/audio/background_music.mp3')
 pygame.mixer.music.play(-1)
 pygame.mixer.music.set_volume(0.4)
 
+# Game Pause-------------------------------#
 def game_pause():
     game = True
     click = False
@@ -103,6 +105,7 @@ def game_pause():
         pygame.display.update()
         clock.tick(FPS)
 
+# Shake Functionality-----------------------------------#
 def apply_shake(shake_duration):
     if shake_duration > 0:
         offset_x = random.randint(-shake_intensity, shake_intensity)
@@ -112,7 +115,8 @@ def apply_shake(shake_duration):
 
 # Text-----------------------------#
 text = Font('large_font.png', (255, 255, 255), 2)
-main_menu_text = Font('large_font.png', (10, 0, 0), 1.5)
+main_menu_text = Font('large_font.png', (250, 30, 52), 6)
+current_score_text = Font('small_font.png', (255, 255, 255), 3)
 
 # Constants-----------------------------#
 clock = pygame.time.Clock()
@@ -142,6 +146,8 @@ road_speed = 3
 
 score_x, score_y = 10, 10
 score = 0
+highest_score = int(read_file('data/score.txt'))
+current_score = 0
 
 button_click = False
 button_clicked = None
@@ -210,6 +216,10 @@ while running:
                     play_sound(failed)
                     shake_duration = 20
                     game_start = True
+                    current_score = score
+                    if score > highest_score:
+                        highest_score = score
+                        write_data('data/score.txt', highest_score)
                     # pygame.time.wait(100)
 
     player.display_player(screen, offset_x, offset_y)
@@ -256,6 +266,11 @@ while running:
                 button_clicked = button
             else:
                 screen.blit(button_data[0], button_data[2])
+        score_width = main_menu_text.get_width(f"{highest_score}")
+        main_menu_text.display_fonts(screen, f"{highest_score}", [(SCREEN_WIDTH - score_width) // 2, 100])
+        current_score_width = current_score_text.get_width(f"Current Score {current_score}")
+        current_score_text.display_fonts(screen, f"Current Score {current_score}", [(SCREEN_WIDTH -
+                                                                                     current_score_width) // 2, 200])
 
     pygame.display.update()
     clock.tick(FPS)

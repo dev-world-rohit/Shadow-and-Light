@@ -95,6 +95,7 @@ def game_pause():
                 click = False
         else:
             screen.blit(button_data[0], button_data[2])
+            click = False
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -248,6 +249,7 @@ while running:
             if button_click:
                 game_pause()
                 button_click = False
+                player.change_color()
         else:
             button_click = False
             screen.blit(button_data[0], button_data[2])
